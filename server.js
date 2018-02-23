@@ -15,7 +15,9 @@ app.use((req, res, next) => {
 
 app.use('/todo', Todo)
 
-
+router.get('/', (req, res) => {
+    res.send("i am running")
+})
 
 app.listen(port, (req, res) => {
     console.log('I am running')
