@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 
 app.use('/todo', Todo)
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send("i am running")
 })
 
