@@ -1,5 +1,5 @@
 let secretkey ="secretKey"
-let userDB = []
+let dB = []
 
-exports.userDB = userDB
+exports.dB = dB
 exports.secretkey = secretkey
