@@ -19,7 +19,7 @@ router.post('/signup', (req, res) => {
     ((hash) => {
       counter++
       console.log(counter)
-     dB.push({ username, hash })
+     dB.push({ id:counter, username, hash })
       console.log(dB)
 
     })
