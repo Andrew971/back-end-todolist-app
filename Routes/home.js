@@ -3,11 +3,11 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-// const User = require('./userDB.js')
+require('./userDB.js')
 
 //bcrypt code 
 const saltRounds = 10
-let dB = []
+// let dB = []
 let counter = 0
 
 
@@ -20,8 +20,8 @@ router.post('/signup', (req, res) => {
     ((hash) => {
       counter++
       console.log(counter)
-     db.push({ username, hash })
-      console.log(db)
+     dB.push({ username, hash })
+      console.log(dB)
 
     })
 
