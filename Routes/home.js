@@ -3,11 +3,10 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-require('./userDB.js')
 
 //bcrypt code 
 const saltRounds = 10
-// let dB = []
+let dB = []
 let counter = 0
 
 
