@@ -18,8 +18,8 @@ router.post('/signup', (req, res) => {
   bcrypt.hash(password, saltRounds).then
     ((hash) => {
 
-      User.db.push({ username, hash })
-      console.log(User.db)
+     db.push({ username, hash })
+      console.log(db)
 
     })
 
