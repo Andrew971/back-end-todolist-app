@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/Andrew971/back-end-todolist-app#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.2.0"
   }
 }
