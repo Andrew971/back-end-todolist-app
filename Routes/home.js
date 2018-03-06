@@ -15,7 +15,6 @@ router.use(bodyParser.json())
 
 router.post('/signup', (req, res) => {
   const { username, password } = req.body
-  console.log(username,password)
 
   bcrypt.hash(password, saltRounds).then
     ((hash) => {
