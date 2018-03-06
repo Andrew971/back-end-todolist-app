@@ -3,13 +3,12 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const secretkey = require('./userDB')
-// const userDB = require('./userDB')
+const secretkey = require('./userDB.js')
+const userDB = require('./userDB.js')
 
 //bcrypt code 
 const saltRounds = 10
 
-let userDB = []
 
 
 router.use(bodyParser.json())
