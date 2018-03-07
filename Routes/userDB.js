@@ -1,7 +1,5 @@
 let secretkey ="secretKey"
 let dB = []
 
-module.exports={
-  dB,
-  secretkey,
-}
+module.exports= {dB:dB}
+
