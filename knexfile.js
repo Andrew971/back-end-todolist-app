@@ -2,13 +2,6 @@
 
 module.exports = {
 
-  // development: {
-  //   client: 'sqlite3',
-  //   connection: {
-  //     filename: './dev.sqlite3'
-  //   }
-  // },
-
   development: {
     client: 'pg',
     connection: {
@@ -27,7 +20,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection:process.env.DATABASE_URL,
+    connection:process.env.DATABASE_URL + '?ssl=true',
     pool: {
       min: 2,
       max: 10
