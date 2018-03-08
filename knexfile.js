@@ -1,4 +1,5 @@
 // Update with your config settings.
+require('dotenv').load();
 
 module.exports = {
 
@@ -20,7 +21,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection:{database:'postgres://pvdktlsqiflocg:6f70b41436be046b08583f359560648a260ccdfed5aa4896bd153d508f7f38c7@ec2-50-17-206-214.compute-1.amazonaws.com:5432/dd4jl772brs562?ssl=true'},
+    connection:process.env.DATABASE_URL + '?ssl=true',
     pool: {
       min: 2,
       max: 10
