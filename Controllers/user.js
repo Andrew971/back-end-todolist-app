@@ -30,7 +30,8 @@ function GetInfo (id, cb){
 	  let todoList = todos.models.map(todo => todo.attributes)
 		cb({
 			userid: user.attributes.id,
-			todos: todoList
+			todos: todoList,
+			username:user.attributes.Username
 		})
 	})
 }
