@@ -70,6 +70,7 @@ router.post('/', (req, res) => {
          res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {
        user.GetInfo(decoded.id, (userInfo)=>{
+         console.log(userInfo)
         res.json(userInfo)
        })
       }
