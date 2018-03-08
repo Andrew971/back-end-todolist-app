@@ -31,7 +31,6 @@ router.post('/:todoId', jsonParser, (req, res, body) => {
 	let { todoId } = req.params
 	let data = req.body
 	let {parentId} = data
-	let userDb = User.dB
 
 	todo.RemoveTodo(parentId,todoId,(todo)=>{
 		res.json(todo.todos)
