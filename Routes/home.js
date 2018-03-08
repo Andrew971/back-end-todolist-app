@@ -3,11 +3,9 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const User = require('./userDB')
+const user = require('../Controllers/user')
 //bcrypt code 
 const saltRounds = 10
-// let dB = []
-let counter = 0
 let secretkey ="secretKey"
 
 
@@ -18,8 +16,7 @@ router.post('/signup', (req, res) => {
 
   bcrypt.hash(password, saltRounds).then
     ((hash) => {
-      counter++
-     User.dB.push({ id:counter, username, hash,todo:[] })
+     user.AddUser(username,hash)
     })
   res.send('thanks for your sign up')
 
@@ -28,28 +25,31 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', (req, res) => {
   const { username, password } = req.body
-  let user =  User.dB.find((user) => {
-    return user.username === username
+
+  user.GetUser(username, (user) => {
+    
+    if (user) {
+      bcrypt.compare(password, user.Password).then((result) => {
+        if (result) {
+         let id=user.id
+            //If we have a valid user, create jwt token with
+            //the secret key
+            let token = jwt.sign({
+              id
+            }, secretkey)
+            //send the token back to the user
+            res.json({ token:token, username:username })
+          }
+          //if the result is false, send back a null token
+          else res.json({ token: null})
+        })
+      //If we didn't find the user, send back a null token
+    } else {
+      res.json({ token: null })
+    }
   })
-  if (user) {
-    bcrypt.compare(password, user.hash).then((result) => {
-      if (result) {
-       let id=user.id
-          //If we have a valid user, create jwt token with
-          //the secret key
-          let token = jwt.sign({
-            id
-          }, secretkey)
-          //send the token back to the user
-          res.json({ token:token, username:username })
-        }
-        //if the result is false, send back a null token
-        else res.json({ token: null})
-      })
-    //If we didn't find the user, send back a null token
-  } else {
-    res.json({ token: null })
-  }
+
+
 })
 
 router.get('/signout', (req, res) => {
@@ -69,12 +69,9 @@ router.post('/', (req, res) => {
           
          res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {
-        // if everything is good, save to request for use in other routes
-         let info =  User.dB.filter((data)=>{
-          return data.id === decoded.id
-        })
-        req.decoded = decoded;
-        res.json(info[0])    
+       user.GetInfo(decoded.id, (userInfo)=>{
+        res.json(userInfo)
+       })
       }
 
   })

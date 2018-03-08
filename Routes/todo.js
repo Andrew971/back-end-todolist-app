@@ -1,81 +1,54 @@
 const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
-const User = require('./userDB')
 var jsonParser = bodyParser.json()
+const todo = require('../Controllers/todo')
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-let todo = []
 
 router.post('/get', jsonParser, (req, res) => {
-	let userDb = User.dB
 	let data = req.body
-	let Current = userDb.find((user) => {
-		return user.id == data.parentId
+	let {parentId} = data
+
+	todo.GetTodo(parentId,(todo)=>{
+		res.json(todo.todos)
 	})
-	res.send(Current.todo)
 })
 
 router.post('/', jsonParser, (req, res, body) => {
 	let data = req.body
-	let userDb = User.dB
+	let {parentId} = data
+	let {text,status} = data.Input
 
-	userDb.forEach((user) => {
-		if (user.id === data.parentId) {
-			user.todo.push(data.Input)
-		}
+	todo.AddTodo(text,status,parentId,(todo)=>{
+		res.json(todo.todos)
 	})
-	let Current = userDb.find((user) => {
-		return user.id == data.parentId
-	})
-
-	res.json(Current.todo)
-
 })
 
-router.post('/:id', jsonParser, (req, res, body) => {
-	let { id } = req.params
+router.post('/:todoId', jsonParser, (req, res, body) => {
+	let { todoId } = req.params
 	let data = req.body
+	let {parentId} = data
 	let userDb = User.dB
 
-	userDb.forEach((user) => {
-		if (user.id === data.parentId) {
-			user.todo = user.todo.filter((item) => {
-				return item.id !== Number(id);
-			});
-		}
+	todo.RemoveTodo(parentId,todoId,(todo)=>{
+		res.json(todo.todos)
 	})
-	let Current = userDb.find((user) => {
-		return user.id == data.parentId
-	})
-	res.json(Current.todo)
 
 })
 
 
 
-router.post('/update/:id', jsonParser, (req, res, body) => {
-	let { id } = req.params
+router.post('/update/:todoId', jsonParser, (req, res, body) => {
+	let { todoId } = req.params
 	let data = req.body
-	let userDb = User.dB
-	userDb.forEach((user) => {
-		if (user.id === data.parentId) {
-			user.todo = user.todo.map((item) => {
-				if (item.id == id) {
-					item.status = data.status
-				}
-				return item
-			})
-		}
-	})
-	let Current = userDb.find((user) => {
-		return user.id == data.parentId
-	})
+	let {parentId, status} = data
 
-	res.json(Current.todo)
-
+	todo.UpdateTodo(parentId,todoId,status,(todo)=>{
+		res.json(todo.todos)
+	})
 })
 
 
